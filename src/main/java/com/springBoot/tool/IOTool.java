@@ -358,10 +358,10 @@ public class IOTool
 			outputStream = new FileOutputStream(new File(file), isNotOverwrite);			
 			try {
 				//charset转码后写入
-				outputStream.write((str + "\n").getBytes(charset));
+				outputStream.write((str).getBytes(charset));
 			} catch (Exception e) {
 				//如果转码不支持就直接写入,不转码
-				outputStream.write((str + "\n").getBytes());
+				outputStream.write((str).getBytes());
 			}
 			outputStream.flush();
 		} catch (Exception e) {

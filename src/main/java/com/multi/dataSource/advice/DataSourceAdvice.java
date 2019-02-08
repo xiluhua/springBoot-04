@@ -23,11 +23,11 @@ public class DataSourceAdvice implements MethodBeforeAdvice,AfterReturningAdvice
 			throws Throwable {
 	
 		int id = (int)args[0];
-		System.out.println(DataSourceAdvice.class+": "+id);
 		if (id % 2 == 0) {
 			DataSourceContextHolder.setDataSourceType(MultiDataSource.dataSource2);
 		}else {
 			DataSourceContextHolder.setDataSourceType(MultiDataSource.dataSource1);
 		}
+		System.out.println(DataSourceAdvice.class+": "+id+" : "+DataSourceContextHolder.getDataSourceType());
 	}
 }

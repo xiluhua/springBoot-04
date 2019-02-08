@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ImportResource;
 public class SpringBoot04Application {
 	
 	public static void main(String[] args) {
+		
 		if (args == null || args.length == 0) {
 			boolean flag = new Bootup().createAopConfig4MultiDatasource();
 			if (!flag) {

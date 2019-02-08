@@ -11,9 +11,10 @@ import com.multi.dataSource.MultiDataSource;
 import com.springBoot.tool.IOTool;
 public class Bootup {
 	
-	public final static String APPLICATION_CONTEXT_XML 	= "applicationContext.xml";
-	private final static String POINTCUT_SPACE 			= "<!--POINTCUT SPACE-->";     
-	private final static String ADVISER_SPACE  			= "<!--ADVISER SPACE-->"; 
+	public final static String APPLICATION_CONTEXT_XML 			= "applicationContext.xml";
+	public final static String APPLICATION_CONTEXT_XML_ORIGIN 	= "applicationContextOrigin.xml";
+	private final static String POINTCUT_SPACE 					= "<!--POINTCUT SPACE-->";     
+	private final static String ADVISER_SPACE  					= "<!--ADVISER SPACE-->"; 
 	private final static String POINTCUT = "<aop:pointcut id=\"datasourcePointCut#INDEX\"  expression=\"execution(* #PKG.*(..))\" />"; 
 	private final static String ADVISER  = "<aop:advisor advice-ref=\"dataSourceAdvice\"   pointcut-ref=\"datasourcePointCut#INDEX\" order=\"1\" />"; 
 	private String utf8 				 = "utf-8";
@@ -38,18 +39,23 @@ public class Bootup {
 			System.out.println(builder1.toString());
 			System.out.println(builder2.toString());
 			
-			URL url = Bootup.class.getClassLoader().getResource(APPLICATION_CONTEXT_XML);
-			System.out.println(APPLICATION_CONTEXT_XML+" path: "+url.getPath());
+			// read
+			URL url = Bootup.class.getClassLoader().getResource(APPLICATION_CONTEXT_XML_ORIGIN);
+			System.out.println(APPLICATION_CONTEXT_XML_ORIGIN+" path: "+url.getPath());
 			String content = IOTool.readFile(url.getPath(), utf8);
+			
+			// rewrite
+			URL url2 = Bootup.class.getClassLoader().getResource(APPLICATION_CONTEXT_XML);
+			System.out.println(APPLICATION_CONTEXT_XML+" path: "+url2.getPath());
 			content = content.replaceAll(POINTCUT_SPACE, builder1.toString());
 			content = content.replaceAll(ADVISER_SPACE,  builder2.toString());
-			IOTool.writeIntoTxt(url.getPath(), content, false, utf8);
-			content = IOTool.readFile(url.getPath(), utf8);
+			IOTool.writeIntoTxt(url2.getPath(), content, false, utf8);
+			content = IOTool.readFile(url2.getPath(), utf8);
+			
 			System.out.println(content);
 			System.out.println("*********************************************************************************************");
-			System.out.println("************************************** CONFIG SUCCESS! ***************************************");
+			System.out.println("************************************* CONFIG SUCCESS! ***************************************");
 			System.out.println("*********************************************************************************************");
-			
 		} catch (Exception e) {
 			flag = false;
 			e.printStackTrace();
@@ -64,7 +70,11 @@ public class Bootup {
 		StringBuilder builder2 = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
 			String advisor  = null;
-			advisor  = new String(ADVISER).replace("#INDEX", String.valueOf(i+1));
+			if (i == 0) {
+				advisor  = new String(ADVISER).replace("#INDEX", String.valueOf(i+1));
+			}else {
+				advisor  = new String("\t\t"+ADVISER).replace("#INDEX", String.valueOf(i+1));
+			}
 			builder2.append(advisor);
 			builder2.append(System.getProperty("line.separator"));
 		}
@@ -75,7 +85,11 @@ public class Bootup {
 		StringBuilder builder1 = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
 			String pointcut = null;
-			pointcut = new String(POINTCUT).replace("#INDEX", String.valueOf(i+1));
+			if (i == 0) {
+				pointcut = new String(POINTCUT).replace("#INDEX", String.valueOf(i+1));
+			}else {
+				pointcut = new String("\t\t"+POINTCUT).replace("#INDEX", String.valueOf(i+1));
+			}
 			pointcut = pointcut.replace("#PKG", list.get(i));
 			builder1.append(pointcut);
 			builder1.append(System.getProperty("line.separator"));
