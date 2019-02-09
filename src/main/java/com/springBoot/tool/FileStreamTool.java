@@ -11,6 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FileStreamTool {
+	
+	public static final String lineSeparator = System.getProperty("line.separator");
 	/**
 	 * 文件转换成流，返回流
 	 * @param xmlStream

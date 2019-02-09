@@ -2,6 +2,8 @@ package com.multi.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Customer {
 
 	private Integer id;

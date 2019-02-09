@@ -4,13 +4,14 @@ import java.lang.reflect.Method;
 
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.MethodBeforeAdvice;
+import org.springframework.stereotype.Component;
 
 import com.multi.dataSource.DataSourceContextHolder;
 import com.multi.dataSource.MultiDataSource;
 
-public class DataSourceAdvice implements MethodBeforeAdvice,AfterReturningAdvice
+@Component
+public class MultiDataSourceAdvice implements MethodBeforeAdvice,AfterReturningAdvice
 {
-
 	@Override
 	public void afterReturning(Object returnValue, Method method,
 			Object[] args, Object target) throws Throwable {
@@ -28,6 +29,6 @@ public class DataSourceAdvice implements MethodBeforeAdvice,AfterReturningAdvice
 		}else {
 			DataSourceContextHolder.setDataSourceType(MultiDataSource.dataSource1);
 		}
-		System.out.println(DataSourceAdvice.class+": "+id+" : "+DataSourceContextHolder.getDataSourceType());
+		System.out.println(MultiDataSourceAdvice.class+": "+id+" : "+DataSourceContextHolder.getDataSourceType());
 	}
 }

@@ -1,4 +1,4 @@
-package com.multi.service2;
+package com.springBoot.example;
 
 import com.multi.entity.Customer;
 

@@ -101,8 +101,10 @@
     <!--
          beanName : org.springframework.aop.config.internalAutoProxyCreator
          className: AspectJAwareAdvisorAutoProxyCreator
+    <bean id="multiDataSourceAdvice" 	class="com.multi.dataSource.advice.MultiDataSourceAdvice" />
+    <bean id="logBeforeAdvice" 			class="com.multi.log.advice.LogBeforeAdvice" />
+    <bean id="logAfterReturningAdvice" 	class="com.multi.log.advice.LogAfterReturningAdvice" />
      -->
-    <bean id="dataSourceAdvice" class="com.multi.dataSource.advice.DataSourceAdvice" />
 	
     <!-- 数据源 advice -->
     <aop:config>
